@@ -162,7 +162,7 @@ public class ExtractSinglePage {
 			for(int dataRecordArrayCounter=0;dataRecordArrayCounter<dataRecords.length;dataRecordArrayCounter++)
 			{
 				int schemaCounter;
-				String []tagsSchema=new String[20];
+				String []tagsSchema=new String[50];  // modified from 20 to 50 ,by taiyun, 2013-7-26
 				
 				TagNode []firstRecordTags=dataRecords[dataRecordArrayCounter][0].getRecordElements();
 				String firstRecordTagsString=dataRecords[dataRecordArrayCounter][0].toString().trim();
@@ -430,7 +430,8 @@ public class ExtractSinglePage {
 				String[][] table = dataTables.get(loop);
 				if(table != null)
 				{
-					output.format("<br/><b>Data Region %d</b><br/>", tableCounter);
+					//output.format("<br/><b>Data Region %d</b><br/>", tableCounter);
+					output.format("<br/><b>ParentNodeTree Region %d</b><br/>", tableCounter);
 					// 打印每个数据区域�?tag tree
 					printTree(output, dataRegionRootNodes[loop],"&nbsp;");
 					// 打印数据记录
