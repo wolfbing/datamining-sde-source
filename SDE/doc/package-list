@@ -1,0 +1,9 @@
+com.datamining.sde.application
+com.datamining.sde.basictype
+com.datamining.sde.columnaligner
+com.datamining.sde.datarecordsfinder
+com.datamining.sde.dataregionsfinder
+com.datamining.sde.net
+com.datamining.sde.tagtreebuilder
+com.datamining.sde.test
+com.datamining.sde.treematcher
