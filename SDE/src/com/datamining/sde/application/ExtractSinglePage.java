@@ -157,12 +157,13 @@ public class ExtractSinglePage {
 			}
 			
 			// added by Taiyun Liu , 2013-7-21 17:19
-			//实现Data Record一行一记录
-			//DataRecord[][] dataRecordsAfterCutLine = new DataRecord[ dataRegions.size() ][];
+			//实现Data Record一行一记录，根据Data Record的Schema来对Data Record进行切分
 			for(int dataRecordArrayCounter=0;dataRecordArrayCounter<dataRecords.length;dataRecordArrayCounter++)
 			{
-				int schemaCounter;
-				String []tagsSchema=new String[50];  // modified from 20 to 50 ,by taiyun, 2013-7-26
+				//int schemaCounter;
+				//获取Data Record的Schema
+				List <String> tagsSchemaList=new ArrayList<String>();
+				//String []tagsSchema=new String[50];  // modified from 20 to 50 ,by taiyun, 2013-7-26
 				
 				TagNode []firstRecordTags=dataRecords[dataRecordArrayCounter][0].getRecordElements();
 				String firstRecordTagsString=dataRecords[dataRecordArrayCounter][0].toString().trim();
@@ -177,22 +178,30 @@ public class ExtractSinglePage {
 					//System.out.println("Data Record:"+dataRecordArrayCounter);
 					String tempTags;
 					tempTags=dataRecords[dataRecordArrayCounter][0].toString();
+					
+					String str=tempTags.trim();
+					if(str.equals(""))
+					{
+						continue;
+					}
+					
 					for(int dataRecordLineCounter=1;dataRecordLineCounter<dataRecords[dataRecordArrayCounter].length;dataRecordLineCounter++)
 					{
 						tempTags+=dataRecords[dataRecordArrayCounter][dataRecordLineCounter].toString();
 					}
-					//System.out.println(tempTags);
+					System.out.println("tempTags:"+tempTags);
 					String []allTags=tempTags.split(" ");
-					String []tagsTemp=new String[100];
-					tagsSchema[0]=allTags[0];
-					schemaCounter=1;
+					List <String> tagsTempList=new ArrayList<String>();
+					//String []tagsTemp=new String[100];
+					tagsSchemaList.add(allTags[0]);
+					//schemaCounter=1;
 					int i=1;
 					
 					for(;i<allTags.length;i++)
 					{
-						if(!(allTags[i].equals(tagsSchema[0])))
+						if(!(allTags[i].equals(tagsSchemaList.get(0))))
 						{
-							tagsSchema[schemaCounter++]=allTags[i];
+							tagsSchemaList.add(allTags[i]);
 							//dataRecordsAfterCutLine[dataRecordArrayCounter]=dataRecords[dataRecordArrayCounter];
 							continue;
 						}
@@ -201,32 +210,35 @@ public class ExtractSinglePage {
 							int j=i;
 							int k=0;
 							int k1=0;
-							for(;j<allTags.length&&k<schemaCounter;j++,k++,i++)
+							for(;j<allTags.length&&k<tagsSchemaList.size();j++,k++,i++)
 							{
-								if(allTags[j].equals(tagsSchema[k]))
+								if(allTags[j].equals(tagsSchemaList.get(k)))
 								{
-									System.out.println("schemaCounter value is:"+schemaCounter);
+									System.out.println("schemaCounter value is:");
 									System.out.println("j value is:"+j);
 									System.out.println("i value is:"+i);
-									tagsTemp[k1++]=allTags[j];
+									tagsTempList.add(k1++, allTags[j]);
+									//tagsTemp[k1++]=allTags[j];
 									System.out.println("k value is:"+k);									
 									//continue;
 								}
 								else
 								{
-									tagsTemp[k1++]=allTags[j];
+									tagsTempList.add(k1++, allTags[j]);
+									//tagsTemp[k1++]=allTags[j];
 									System.out.println("count of retrieve");
 									for(int m=0;m<k1;m++)
 									{
 										//System.out.println("schemaCounter:"+schemaCounter);
-					     				tagsSchema[schemaCounter++]=tagsTemp[m];
+										tagsSchemaList.add(tagsTempList.get(m));
+					     				//tagsSchema[schemaCounter++]=tagsTemp[m];
 										//continue;
 									}
 									k1=0;
 									k=-1;
 									continue;
 								}
-								if(k==schemaCounter-1)
+								if(k==tagsSchemaList.size()-1)
 								{
 									k=-1;
 									continue;
@@ -249,11 +261,13 @@ public class ExtractSinglePage {
 				//}
 				//System.out.println("the tagsSchema is over!");
 				}
+				
+				//根据获取的到的Schema进行切分
 				{
 					String str="";
-					for(int sum=0;sum<schemaCounter;sum++)
+					for(int sum=0;sum<tagsSchemaList.size();sum++)
 					{
-						str+=tagsSchema[sum].toString();
+						str+=tagsSchemaList.get(sum);
 					}
 					if(str.equals(strFirstRecordTagsString))
 					{
@@ -263,25 +277,26 @@ public class ExtractSinglePage {
 					}
 					else
 					{
-						TagNode []tagnode=new TagNode[100];
-						int countOfTotalTag=0;
 						//获取到所有的Tags
+						List <TagNode> tagnodeList=new ArrayList<TagNode>();
+						//TagNode []tagnode=new TagNode[100];
+						//int countOfTotalTag=0;
 						for(int i=0;i<dataRecords[dataRecordArrayCounter].length;i++)
 						{
 							TagNode [] tempTagNodeOfLine=dataRecords[dataRecordArrayCounter][i].getRecordElements();
 							for(int j=0;j<tempTagNodeOfLine.length;j++)
 							{
-								tagnode[countOfTotalTag++]=tempTagNodeOfLine[j];
+								tagnodeList.add(tempTagNodeOfLine[j]);
 							}
 						}
 						int countOfDataRecod;
-						if(countOfTotalTag%schemaCounter==0)
+						if(tagnodeList.size()%tagsSchemaList.size()==0)
 						{
-							countOfDataRecod=countOfTotalTag/schemaCounter;
+							countOfDataRecod=tagnodeList.size()/tagsSchemaList.size();
 						}
 						else
 						{
-							countOfDataRecod=countOfTotalTag/schemaCounter+1;
+							countOfDataRecod=tagnodeList.size()/tagsSchemaList.size()+1;
 						}
 						//DataRecord[][]tempDataRecords=new DataRecord[1][countOfDataRecod];
 						dataRecords[dataRecordArrayCounter]=new DataRecord[countOfDataRecod];
@@ -289,12 +304,12 @@ public class ExtractSinglePage {
 						for(int i=0;i<countOfDataRecod;i++)
 						{
 							int counterOfSchemaCounter=0;
-							TagNode[]tempTagNode2=new TagNode[schemaCounter];
+							TagNode[]tempTagNode2=new TagNode[tagsSchemaList.size()];
 							boolean flag=true;
-							for(;counterOfSchemaCounter<schemaCounter;counterOfSchemaCounter++)
+							for(;counterOfSchemaCounter<tagsSchemaList.size();counterOfSchemaCounter++)
 							{
 								flag=true;
-								tempTagNode2[counterOfSchemaCounter]=tagnode[counter++];
+								tempTagNode2[counterOfSchemaCounter]=tagnodeList.get(counter++);
 								if(tempTagNode2[counterOfSchemaCounter]==null)
 								{
 									flag=false;
