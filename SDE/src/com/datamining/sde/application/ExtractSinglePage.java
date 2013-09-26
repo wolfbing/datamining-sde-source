@@ -53,7 +53,7 @@ public class ExtractSinglePage {
 	 */
 	public ExtractSinglePage() {
 		// TODO Auto-generated constructor stub
-		outEncoding = "gbk";
+		outEncoding = "gb2312";
 	}
 	/**
 	 * 设置输出编码的方法;
@@ -83,7 +83,8 @@ public class ExtractSinglePage {
 		
 		for (TagNode child: tagNode.getChildren() )
 		{
-			printTree(output, child, "&nbsp;——&nbsp;"+indent);
+			printTree(output, child, "&nbsp;--&nbsp;"+indent);
+			//printTree(output,child,"  "+indent);
 		}
 	}
 	
@@ -114,8 +115,8 @@ public class ExtractSinglePage {
 		// parameter default
 		String input = argMap.get("url");
 		String resultOutput = argMap.get("-o")!=null? argMap.get("-o"):"MDR.html";
-		outEncoding = argMap.get("-e")!=null?argMap.get("-e"):"gbk";
-		double similarityTreshold = argMap.get("-s")!=null? Double.parseDouble(argMap.get("-s")):0.80;
+		outEncoding = argMap.get("-e")!=null?argMap.get("-e"):"gb2312";
+		double similarityTreshold = argMap.get("-s")!=null? Double.parseDouble(argMap.get("-s")):0.90;
 		boolean ignoreFormattingTags = argMap.get("-i")!=null? Boolean.parseBoolean(argMap.get("-i")):false;
 		boolean useContentSimilarity = argMap.get("-en")!=null?Boolean.parseBoolean(argMap.get("-en")):false;
 		int maxNodeInGeneralizedNodes = argMap.get("-m")!=null? Integer.parseInt(argMap.get("-m")):9;
@@ -130,6 +131,7 @@ public class ExtractSinglePage {
 			TagTreeBuilder builder = new DOMParserTagTreeBuilder();
 			// bangun pohon tag dari file input menggunakan objek TagTreeBuilder yang telah dibuat
 			TagTree tagTree = builder.buildTagTree(input, ignoreFormattingTags);
+			printTree(output,tagTree.getRoot(),"#");
 			//print(A.getRoot(), " ");
 			//printHTML( A.getRoot());
 			// buat objek TreeMatcher yang menggunakan algoritma simple tree matching
@@ -154,6 +156,11 @@ public class ExtractSinglePage {
 				dataRegionRootNodes[dataRecordArrayCounter] = dataRegions.get(dataRecordArrayCounter).getParent();
 				DataRegion dataRegion = dataRegions.get( dataRecordArrayCounter );
 				dataRecords[ dataRecordArrayCounter ] = dataRecordsFinder.findDataRecords(dataRegion, similarityTreshold);
+				System.out.println("DataRecord "+dataRecordArrayCounter);
+				for(int j=0;j<dataRecords[dataRecordArrayCounter].length;j++)
+				{
+					System.out.println(dataRecords[dataRecordArrayCounter][j].toString().trim());
+				}
 			}
 			
 			// added by Taiyun Liu , 2013-7-21 17:19
@@ -175,7 +182,7 @@ public class ExtractSinglePage {
 				}
 				else
 				{
-					//System.out.println("Data Record:"+dataRecordArrayCounter);
+					System.out.println("Data Record:"+dataRecordArrayCounter);
 					String tempTags;
 					tempTags=dataRecords[dataRecordArrayCounter][0].toString();
 					
@@ -303,10 +310,14 @@ public class ExtractSinglePage {
 						int counter=0;
 						for(int i=0;i<countOfDataRecod;i++)
 						{
+							if(dataRecordArrayCounter==22)
+							{
+								System.out.println("25");
+							}
 							int counterOfSchemaCounter=0;
 							TagNode[]tempTagNode2=new TagNode[tagsSchemaList.size()];
 							boolean flag=true;
-							for(;counterOfSchemaCounter<tagsSchemaList.size();counterOfSchemaCounter++)
+							for(;counterOfSchemaCounter<tagsSchemaList.size()&&counter<tagnodeList.size();counterOfSchemaCounter++)
 							{
 								flag=true;
 								tempTagNode2[counterOfSchemaCounter]=tagnodeList.get(counter++);
@@ -314,6 +325,10 @@ public class ExtractSinglePage {
 								{
 									flag=false;
 								}
+							}
+							if(counterOfSchemaCounter<tagsSchemaList.size())
+							{
+								flag=false;
 							}
 							if(flag)
 							{
@@ -328,6 +343,7 @@ public class ExtractSinglePage {
 					}
 				}
 				System.out.println("After Silce Data Record:"+dataRecordArrayCounter);
+				System.out.println("length:"+dataRecords[dataRecordArrayCounter].length);
 				for(int j=0;j<dataRecords[dataRecordArrayCounter].length;j++)
 				{
 					System.out.println("line:"+j+" "+dataRecords[dataRecordArrayCounter][j].toString());
