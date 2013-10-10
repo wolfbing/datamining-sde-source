@@ -23,9 +23,9 @@ public class PartialTreeAligner implements ColumnAligner
 	}
 
 	/**
-	 * 多棵树的部分对齐
+	 * 澶氭５鏍戠殑閮ㄥ垎瀵归綈
 	 * 
-	 * 返回抽取出来的数据表
+	 * 杩斿洖鎶藉彇鍑烘潵鐨勬暟鎹〃
 	 */
 	public String[][] alignDataRecords(DataRecord[] dataRecordsArray)
 	{
@@ -39,11 +39,11 @@ public class PartialTreeAligner implements ColumnAligner
 		// buat map of map
 		DataRecord originalSeed = dataRecords.get( dataRecords.size()-1 );
 		/*
-		 * 在种子树和其他树的节点的映射上，采用map存储，从种子树的节点映射到其他树
+		 * 鍦ㄧ瀛愭爲鍜屽叾浠栨爲鐨勮妭鐐圭殑鏄犲皠涓婏紝閲囩敤map瀛樺偍锛屼粠绉嶅瓙鏍戠殑鑺傜偣鏄犲皠鍒板叾浠栨爲
 		 */
 		Map<DataRecord, Map<TagNode, TagNode>> mapping = new HashMap<DataRecord, Map<TagNode, TagNode>>();
 		mapping.put(originalSeed, new HashMap<TagNode, TagNode>() );
-		// 种子树
+		// 绉嶅瓙鏍�		
 		DataRecord seedDataRecord = copyDataRecord( dataRecords.get( dataRecords.size()-1 ) );
 		// hilangkan seedDataRecord dari list data records
 		dataRecords.remove( dataRecords.size()-1 );
@@ -58,7 +58,7 @@ public class PartialTreeAligner implements ColumnAligner
 			List<TreeAlignment> alignmentList = treeAligner.align( seedDataRecord.getRecordElements(), nextDataRecord.getRecordElements() ).getSubTreeAlignment();
 			// buat map hasil penjajaran
 			mapping.put(nextDataRecord, new HashMap<TagNode, TagNode>() );
-			/// alignmentList 包含了所有对齐
+			/// alignmentList 鍖呭惈浜嗘墍鏈夊榻�			
 			for (TreeAlignment alignment: alignmentList)
 			{
 				mapping.get(nextDataRecord).put( alignment.getFirstNode(), alignment.getSecondNode() );
@@ -200,7 +200,7 @@ public class PartialTreeAligner implements ColumnAligner
 			}
 		}
 		
-		/* 到这里为止貌似没有对最终都未匹配的项做处理（单独占据一列） */
+		/* 鍒拌繖閲屼负姝㈣矊浼兼病鏈夊鏈�粓閮芥湭鍖归厤鐨勯」鍋氬鐞嗭紙鍗曠嫭鍗犳嵁涓�垪锛�*/
 		
 		List< List<String> > tempOutput = new ArrayList< List<String> >();
 		
@@ -289,12 +289,11 @@ public class PartialTreeAligner implements ColumnAligner
 		// buat map of map
 		DataRecord originalSeed = dataRecords.get( dataRecords.size()-1 );
 		/*
-		 * 在种子树和其他树的节点的映射上，采用map存储，从种子树的节点映射到其他树
+		 * 鍦ㄧ瀛愭爲鍜屽叾浠栨爲鐨勮妭鐐圭殑鏄犲皠涓婏紝閲囩敤map瀛樺偍锛屼粠绉嶅瓙鏍戠殑鑺傜偣鏄犲皠鍒板叾浠栨爲
 		 */
 		//Map<DataRecord, Map<TagNode, TagNode>> mapping = new HashMap<DataRecord, Map<TagNode, TagNode>>();
 		mapping.put(originalSeed, new HashMap<TagNode, TagNode>() );
-		// 种子树
-		//DataRecord 
+		// 绉嶅瓙鏍�		//DataRecord 
 		seedDataRecord = copyDataRecord( dataRecords.get( dataRecords.size()-1 ) );
 		// hilangkan seedDataRecord dari list data records
 		dataRecords.remove( dataRecords.size()-1 );
@@ -309,7 +308,7 @@ public class PartialTreeAligner implements ColumnAligner
 			List<TreeAlignment> alignmentList = treeAligner.align( seedDataRecord.getRecordElements(), nextDataRecord.getRecordElements() ).getSubTreeAlignment();
 			// buat map hasil penjajaran
 			mapping.put(nextDataRecord, new HashMap<TagNode, TagNode>() );
-			/// alignmentList 包含了所有对齐
+			/// alignmentList 鍖呭惈浜嗘墍鏈夊榻�			
 			for (TreeAlignment alignment: alignmentList)
 			{
 				mapping.get(nextDataRecord).put( alignment.getFirstNode(), alignment.getSecondNode() );
@@ -451,9 +450,8 @@ public class PartialTreeAligner implements ColumnAligner
 			}
 		}
 		
-		/* 到这里为止貌似没有对最终都未匹配的项做处理（单独占据一列） */
-		// 上面代码“完成”了最终种子树，和种子树与每个数据记录的连接关系
-		
+		/* 鍒拌繖閲屼负姝㈣矊浼兼病鏈夊鏈�粓閮芥湭鍖归厤鐨勯」鍋氬鐞嗭紙鍗曠嫭鍗犳嵁涓�垪锛�*/
+		// 涓婇潰浠ｇ爜鈥滃畬鎴愨�浜嗘渶缁堢瀛愭爲锛屽拰绉嶅瓙鏍戜笌姣忎釜鏁版嵁璁板綍鐨勮繛鎺ュ叧绯�		
 
 	}
 	
@@ -615,8 +613,7 @@ public class PartialTreeAligner implements ColumnAligner
 	}
 
 	/**
-	 * 给定一组节点，得到子树的数据项，存储在一个row上
-	 * @param seed
+	 * 缁欏畾涓�粍鑺傜偣锛屽緱鍒板瓙鏍戠殑鏁版嵁椤癸紝瀛樺偍鍦ㄤ竴涓猺ow涓�	 * @param seed
 	 * @param matchMap
 	 * @param row
 	 */
@@ -643,8 +640,7 @@ public class PartialTreeAligner implements ColumnAligner
 		}
 	}
 	/**
-	 * 给定树的根节点后抽出树的数据项，这里的数据项包括了所有的节点，即使他们没有数据
-	 * @param seed
+	 * 缁欏畾鏍戠殑鏍硅妭鐐瑰悗鎶藉嚭鏍戠殑鏁版嵁椤癸紝杩欓噷鐨勬暟鎹」鍖呮嫭浜嗘墍鏈夌殑鑺傜偣锛屽嵆浣夸粬浠病鏈夋暟鎹�	 * @param seed
 	 * @param matchMap
 	 * @param row
 	 */
@@ -718,19 +714,15 @@ public class PartialTreeAligner implements ColumnAligner
 		}
 	}
 	/**
-	 * 初始化种子对齐
-	 * @param seed - 种子树
-	 * @param original - 初始的用来对齐树的树
-	 * @param map - 种子树种的节点与对齐树的映射关系，在取数据记录时方便，直接按照种子树一个一个取
-	 * 				如果后面的种子树增加了节点，那么就取不到了，map应该返回null
+	 * 鍒濆鍖栫瀛愬榻�	 * @param seed - 绉嶅瓙鏍�	 * @param original - 鍒濆鐨勭敤鏉ュ榻愭爲鐨勬爲
+	 * @param map - 绉嶅瓙鏍戠鐨勮妭鐐逛笌瀵归綈鏍戠殑鏄犲皠鍏崇郴锛屽湪鍙栨暟鎹褰曟椂鏂逛究锛岀洿鎺ユ寜鐓х瀛愭爲涓�釜涓�釜鍙�	 * 				濡傛灉鍚庨潰鐨勭瀛愭爲澧炲姞浜嗚妭鐐癸紝閭ｄ箞灏卞彇涓嶅埌浜嗭紝map搴旇杩斿洖null
 	 */
 	private void createSeedAlignment(TagNode[] seed, TagNode[] original, Map<TagNode, TagNode> map)
 	{
 		/*
-		 * 处理方式应该是：
-		 * 因为seed和original的节点是一样的，所以按照对应位置遍历一下然后对应设置就行了
-		 * 这里是深度优先的遍历
-		 * 这个函数确定了：record的elements是一级子节点
+		 * 澶勭悊鏂瑰紡搴旇鏄細
+		 * 鍥犱负seed鍜宱riginal鐨勮妭鐐规槸涓�牱鐨勶紝鎵�互鎸夌収瀵瑰簲浣嶇疆閬嶅巻涓�笅鐒跺悗瀵瑰簲璁剧疆灏辫浜�		 * 杩欓噷鏄繁搴︿紭鍏堢殑閬嶅巻
+		 * 杩欎釜鍑芥暟纭畾浜嗭細record鐨別lements鏄竴绾у瓙鑺傜偣
 		 */
 		for (int arrayCounter=0; arrayCounter < seed.length; arrayCounter++)
 		{

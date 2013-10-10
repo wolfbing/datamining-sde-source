@@ -121,7 +121,7 @@ public class AppConsole
 			// cari data region pada pohon tag menggunakan objek DataRegionsFinder yang telah dibuat
 			List<DataRegion> dataRegions = dataRegionsFinder.findDataRegions(tagTree.getRoot(), maxNodeInGeneralizedNodes, similarityTreshold);
 			
-			//输出Data Region
+			//杈撳嚭Data Region
 			for(int i=0;i<dataRegions.size();i++)
 			{
 				output.format("DataRegion %s",i);
@@ -143,7 +143,7 @@ public class AppConsole
 				DataRegion dataRegion = dataRegions.get( dataRecordArrayCounter );
 				dataRecords[ dataRecordArrayCounter ] = dataRecordsFinder.findDataRecords(dataRegion,similarityTreshold );
 				
-				//输出Data Record
+				//杈撳嚭Data Record
 				System.out.println("Data Record:"+dataRecordArrayCounter);
 				for(int j=0;j<dataRecords[dataRecordArrayCounter].length;j++)
 				{
@@ -151,8 +151,7 @@ public class AppConsole
 				}
 			}
 			
-			//实现Data Record一行一记录
-			//DataRecord[][] dataRecordsAfterCutLine = new DataRecord[ dataRegions.size() ][];
+			//瀹炵幇Data Record涓�涓�褰�			//DataRecord[][] dataRecordsAfterCutLine = new DataRecord[ dataRegions.size() ][];
 			for(int dataRecordArrayCounter=0;dataRecordArrayCounter<dataRecords.length;dataRecordArrayCounter++)
 			{
 				int schemaCounter;
@@ -227,13 +226,12 @@ public class AppConsole
 								}
 							}
 							
-							//输出获取到的Schema中的标签内容
-							System.out.println("Schema中的标签内容:");
+							//杈撳嚭鑾峰彇鍒扮殑Schema涓殑鏍囩鍐呭顔�							System.out.println("Schema涓殑鏍囩鍐呭:");
 							for(int sum=0;sum<schemaCounter;sum++)
 							{
 								System.out.println(tagsSchema[sum]);
 							}
-							System.out.println("输出完成！");
+							System.out.println("");
 						}
 				}
 					System.out.println("the tagsSchema:");
@@ -245,7 +243,7 @@ public class AppConsole
 			}
 				//if(schemaCounter==1)
 				//{
-					//System.out.println("count==1,不用切分");
+					//System.out.println("count==1,涓嶇敤鍒囧垎");
 					//DataRecord tempDataRecord=new DataRecord(tempTagNode2);
 					//dataRecords[dataRecordArrayCounter][i]=tempDataRecord;
 				//}
@@ -265,7 +263,7 @@ public class AppConsole
 					{
 						TagNode []tagnode=new TagNode[100];
 						int countOfTotalTag=0;
-						//获取到所有的Tags
+						//鑾峰彇鍒版墍鏈夌殑Tags
 						for(int i=0;i<dataRecords[dataRecordArrayCounter].length;i++)
 						{
 							TagNode [] tempTagNodeOfLine=dataRecords[dataRecordArrayCounter][i].getRecordElements();
@@ -315,7 +313,7 @@ public class AppConsole
 
 			
 			
-			//实现相似Data Record的合并
+			//瀹炵幇鐩镐技Data Record鐨勫悎骞�		
 			int newDataRecordCounter=0;
 			DataRecord[][] newDataRecords = new DataRecord[ dataRegions.size() ][];
 			newDataRecords[0]=dataRecords[0];

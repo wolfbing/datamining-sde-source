@@ -1,3 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/com/datamining/sde/application/ExtractAllPageUnderAFolder.java=UTF-8
 encoding//src/com/datamining/sde/application/ExtractSinglePage.java=UTF-8
+encoding//src/com/datamining/sde/basictype/AppConsole.java=UTF-8
+encoding//src/com/datamining/sde/basictype/TreeAlignment.java=UTF-8
+encoding//src/com/datamining/sde/columnaligner/PartialTreeAligner.java=UTF-8
+encoding//src/com/datamining/sde/datarecordsfinder/MiningDataRecords.java=UTF-8

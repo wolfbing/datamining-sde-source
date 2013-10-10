@@ -5,13 +5,12 @@ import java.util.List;
 
 public class TreeAlignment
 {
-	// firstNode secondNode分别存储根节点
-	//  subTreeAlignment存储子节点的匹配，并不存储所有后代节点中的匹配。
-	//  每个匹配都只存储一级子节点的匹配，这样最终将得到完整的匹配
+	// firstNode secondNode鍒嗗埆瀛樺偍鏍硅妭鐐�	//  subTreeAlignment瀛樺偍瀛愯妭鐐圭殑鍖归厤锛屽苟涓嶅瓨鍌ㄦ墍鏈夊悗浠ｈ妭鐐逛腑鐨勫尮閰嶃�
+	//  姣忎釜鍖归厤閮藉彧瀛樺偍涓�骇瀛愯妭鐐圭殑鍖归厤锛岃繖鏍锋渶缁堝皢寰楀埌瀹屾暣鐨勫尮閰�	
 	private double score;
 	private TagNode firstNode;
 	private TagNode secondNode;
-	// 记录匹配的所有节点，不只是一级节点，这点可以通过add()函数看出
+	// 璁板綍鍖归厤鐨勬墍鏈夎妭鐐癸紝涓嶅彧鏄竴绾ц妭鐐癸紝杩欑偣鍙互閫氳繃add()鍑芥暟鐪嬪嚭
 	private List<TreeAlignment> subTreeAlignment = new ArrayList<TreeAlignment>();
 	
 	public TreeAlignment()

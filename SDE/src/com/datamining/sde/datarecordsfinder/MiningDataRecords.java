@@ -45,9 +45,7 @@ public class MiningDataRecords implements DataRecordsFinder
 				
 				TagNode prevChild = generalizedNode.getChildAtNumber( 1 );
 
-				// 我认为这里只做了很简单的判断，如果连续两个节点是不相似的，那么就整个广义节点看作一条记录，
-				// 当每两个连续节点都是相似的时，每个单独的子节点当作数据记录
-				//  这里没有用mdr算法
+				// 鎴戣涓鸿繖閲屽彧鍋氫簡寰堢畝鍗曠殑鍒ゆ柇锛屽鏋滆繛缁袱涓妭鐐规槸涓嶇浉浼肩殑锛岄偅涔堝氨鏁翠釜骞夸箟鑺傜偣鐪嬩綔涓�潯璁板綍锛�				// 褰撴瘡涓や釜杩炵画鑺傜偣閮芥槸鐩镐技鐨勬椂锛屾瘡涓崟鐙殑瀛愯妭鐐瑰綋浣滄暟鎹褰�				//  杩欓噷娌℃湁鐢╩dr绠楁硶
 				// cek apakah semua anak dari G mirip, jika tidak kembalikan tiap generalized node sebagai data records
 				for (int childCounter=2; childCounter <= generalizedNode.childrenCount() ; childCounter++ )
 				{
@@ -68,7 +66,7 @@ public class MiningDataRecords implements DataRecordsFinder
 			for (int generalizedNodeCounter = startPoint; generalizedNodeCounter < startPoint + nodesCovered; generalizedNodeCounter++)
 			{
 				TagNode generalizedNode = parentNode.getChildAtNumber( generalizedNodeCounter );
-				// 广义节点只有一个标签节点，遍历广义节点的每个子节点，每个子节点被当作一条数据记录
+				// 骞夸箟鑺傜偣鍙湁涓�釜鏍囩鑺傜偣锛岄亶鍘嗗箍涔夎妭鐐圭殑姣忎釜瀛愯妭鐐癸紝姣忎釜瀛愯妭鐐硅褰撲綔涓�潯鏁版嵁璁板綍
 				for (TagNode childOfGeneralizedNode: generalizedNode.getChildren())
 				{
 					DataRecord dataRecord = new DataRecord( new TagNode[] { childOfGeneralizedNode} );
@@ -77,7 +75,7 @@ public class MiningDataRecords implements DataRecordsFinder
 			}
 			
 			TagNode recordTagRoot = parentNode.getChildAtNumber(startPoint).getChildren().get(0);
-			// 寻找遗漏的数据记录
+			// 瀵绘壘閬楁紡鐨勬暟鎹褰�			
 			List<DataRecord> foreRegionDatalist = new ArrayList<DataRecord>();
 			for(int nodeBeforeGeneralizedNodeCounter=1; nodeBeforeGeneralizedNodeCounter<startPoint;
 					++nodeBeforeGeneralizedNodeCounter)
@@ -130,8 +128,7 @@ public class MiningDataRecords implements DataRecordsFinder
 	}
 	
 	/**
-	 * 利用coveredNum将数据记录提取出来
-	 * 
+	 * 鍒╃敤coveredNum灏嗘暟鎹褰曟彁鍙栧嚭鏉�	 * 
 	 * @param dataRegion
 	 * @return
 	 */
